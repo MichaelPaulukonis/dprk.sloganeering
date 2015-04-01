@@ -1,8 +1,9 @@
 // this was just a test
 // require('child_process').fork('hello.js');
 
-var spewer = require('./dprk.spew.js');
-var senttags = require('./slogans.words.tagged.min.js');
+var Spew = require('./dprk.spew.js');
+var senttags = require('./tagged.slogans.js');
+var spewer = new Spew(require('./slogans.words.tagged.min.json'));
 var _ = require('underscore');
 
 var cleanup = function(text) {

@@ -13,38 +13,21 @@
 'use strict';
 
 var _ = require('underscore');
-// TODO: we need a lexicon of words, sorted by their POS-tag
-// and then we mod the below
-// getWordByTag becomes soooo much easier
-// var lexicon = require('./lexicon.js');
-var lexicon = require('./retagged.slogans.json');
 
-function getWordByTag(tag) {
-  var word;
-  if (lexicon[tag]) {
-    var words = lexicon[tag];
-    word = _.sample(words);
+var Spewer = function(lexicon) {
+  // lexicon consists of words, sorted by tag (matching the pos library tags)
+  // { "VBP": [], "NN": [], "NNP": {} }
+
+  function getWordByTag(tag) {
+    var word;
+    if (lexicon[tag]) {
+      var words = lexicon[tag];
+      word = _.sample(words);
+    }
+    return word;
   }
-  return word;
 
-  var words = _.chain(lexicon)
-    .map(function(v, k) {
-      if (_.indexOf(v, tag) > -1) {
-        return k;
-      }
-      else {
-        return null;
-      }
-    })
-    .filter(function(el) {
-      return el !== null;
-    })
-    .value();
-  return _.sample(words, 1);
-}
-
-module.exports = {
-  spew: function(tags) {
+  var spew = function(tags) {
     var out = '';
     tags = tags.split(' ');
     _.each(tags, function(tag) {
@@ -52,5 +35,10 @@ module.exports = {
       out += word + ' ';
     });
     return out.trim();
-  }
+  };
+
+  this.lexicon = lexicon;
+  this.spew = spew;
 };
+
+module.exports = Spewer;
