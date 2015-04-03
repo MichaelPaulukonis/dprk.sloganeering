@@ -3,7 +3,7 @@
 
 var Spew = require('./dprk.spew.js');
 var senttags = require('./tagged.slogans.js');
-var spewer = new Spew(require('./slogans.words.tagged.min.json'));
+var spewer = new Spew(require('./slogans.words.tagged.json'));
 var _ = require('underscore');
 var config = require('./config.js');
 var Twit = require('twit');
