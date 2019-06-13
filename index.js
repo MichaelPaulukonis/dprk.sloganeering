@@ -1,22 +1,16 @@
-// this was just a test
-// require('child_process').fork('hello.js');
-
 var Spew = require('./dprk.spew.js');
 var senttags = require('./tagged.slogans.js');
 var spewer = new Spew(require('./slogans.words.tagged.json'));
 var _ = require('underscore');
 var config = require('./config.js');
 var Twit = require('twit');
-var T = new Twit(config);
 
-
-
-var logger = function(msg) {
+var logger = function (msg) {
   if (config.log) console.log(msg);
 };
 
 
-var cleanup = function(text) {
+var cleanup = function (text) {
 
   var clean = text;
 
@@ -31,7 +25,7 @@ var cleanup = function(text) {
 };
 
 
-var tweeter = function() {
+var tweeter = function () {
 
   try {
 
@@ -44,40 +38,28 @@ var tweeter = function() {
     var spewed = spewer.spew(tags);
     spewed = cleanup(spewed);
 
-    logger('\n' + spewed.length + ' : ' + spewed);
+    logger(spewed);
 
   } catch (err) {
     console.log('Error: ' + err.message);
   }
 
-  if (spewed.length === 0 || spewed.length > 140) {
+  if (spewed.length === 0 || spewed.length > 280) {
     tweeter();
   } else {
     if (config.tweet_on) {
-      T.post('statuses/update', { status: spewed }, function(err, reply) {
-	if (err) {
-	  console.log('error:', err);
-	}
-	else {
-          // nothing on success
-	}
+      const T = new Twit(config);
+      T.post('statuses/update', { status: spewed }, function (err, reply) {
+        if (err) {
+          console.log('error:', err);
+        }
+        else {
+        }
       });
     }
   }
 
 };
-
-
-// Tweets ever n minutes
-// set config.seconds to 60 for a complete minute
-setInterval(function () {
-  try {
-    tweeter();
-  }
-  catch (e) {
-    console.log(e);
-  }
-}, 1000 * config.minutes * config.seconds);
 
 // Tweets once on initialization.
 tweeter();

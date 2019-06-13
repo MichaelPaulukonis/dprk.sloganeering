@@ -4,7 +4,8 @@
   "description": "manipulating propoganda to make more progoganda",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "start:verbose": "LOG=true npm start"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
     "url": "https://github.com/michaelpaulukonis/dprk.sloganeering/issues"
   },
   "engines": {
-    "node": "0.12.0"
+    "node": "8.10.0"
   },
   "dependencies": {
     "twit": "~1.1.20",
